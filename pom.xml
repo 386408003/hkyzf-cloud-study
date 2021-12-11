@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>top.hkyzf</groupId>
+    <artifactId>hkyzf-cloud-study</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>hkyzf-commons</module>
+        <module>hkyzf-commons-gateway</module>
+        <module>hkyzf-provider-message</module>
+        <module>hkyzf-consumer-member</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+
+        <spring.boot.version>2.4.3</spring.boot.version>
+        <spring.cloud.version>2020.0.2</spring.cloud.version>
+        <spring.cloud.alibaba.version>2021.1</spring.cloud.alibaba.version>
+        <mybatis.plus.boot.starter.version>3.4.0</mybatis.plus.boot.starter.version>
+        <druid.spring.boot.starter.version>1.1.21</druid.spring.boot.starter.version>
+        <mysql.version>8.0.23</mysql.version>
+        <freemarker.version>2.3.31</freemarker.version>
+        <lombok.version>1.18.18</lombok.version>
+        <hutool.version>5.1.0</hutool.version>
+        <swagger.version>2.9.2</swagger.version>
+
+        <maven.surefire.plugin.version>2.22.1</maven.surefire.plugin.version>
+    </properties>
+
+
+    <!-- 子模块继承之后，提供作用：锁定版本 + 子模块不用写 groupId 和 version -->
+    <!-- 只是声明依赖，并不实现引入，所以子项目需要显示的声明需要的依赖 -->
+    <!-- 如果不在子项目中声明依赖，是不会从夫项目中继承下来的，只有在子项目中写了该依赖，并且没有指定具体版本，才会继承，并且 version 和 scope 都继承 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot 2.4.3 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud 2020.0.2 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring.cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud Alibaba 2021.1 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring.cloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Mybatis Plus 以及代码生成器 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.boot.starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis.plus.boot.starter.version}</version>
+            </dependency>
+            <!-- Druid 数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.spring.boot.starter.version}</version>
+            </dependency>
+            <!-- Mysql 驱动 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <!-- Freemarker 模板引擎 -->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+            <!-- 简化 javabean 开发 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!-- hutool 工具包 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- Swagger2 相关 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <!-- 打包跳过测试阶段 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.version}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
