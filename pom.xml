@@ -10,7 +10,7 @@
     <modules>
         <module>hkyzf-commons</module>
         <module>hkyzf-commons-gateway</module>
-        <module>hkyzf-provider-message</module>
+        <module>hkyzf-provider-member</module>
         <module>hkyzf-consumer-member</module>
     </modules>
     <packaging>pom</packaging>

@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hkyzf-provider-message</artifactId>
+    <artifactId>hkyzf-provider-member</artifactId>
     <name>${project.artifactId}</name>
-    <description>消息服务提供者（Mail、短信、MQ、OSS）</description>
+    <description>会员服务生产者</description>
 
     <dependencies>
         <!-- web项目开发 -->

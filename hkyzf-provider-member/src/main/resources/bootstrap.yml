@@ -18,7 +18,7 @@ spring:
     active: prod
   application:
     # 应用名称
-    name: provider-message
+    name: provider-member
   cloud:
     nacos:
       # Nacos 服务注册与发现地址。

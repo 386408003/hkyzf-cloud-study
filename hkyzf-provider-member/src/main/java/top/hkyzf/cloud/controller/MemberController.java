@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 
 /**
- * 邮件相关接口
+ * 会员服务生产者
  *
  * @author 朱峰
  * @date 2021-12-7 0:36
@@ -29,8 +29,8 @@ import java.io.UnsupportedEncodingException;
 @Slf4j
 @RefreshScope
 @RestController
-@RequestMapping("/message/mail")
-public class MailController {
+@RequestMapping("/provider/member")
+public class MemberController {
     @Resource
     private JavaMailSender mailSender;
     @Value("${spring.mail.username}")
@@ -121,7 +121,7 @@ public class MailController {
      * @param mail 邮件对象
      * @return 发送邮件结果
      */
-    @PostMapping("/sendSimple")
+    @PostMapping("/simpleMail/send")
     public ResultMsg<Boolean> sendSimpleMail(@RequestBody MailDTO mail) {
         try {
             SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -146,8 +146,8 @@ public class MailController {
      * @param mail 邮件对象
      * @return 发送邮件结果
      */
-    @PostMapping("/sendAttachment")
-    public ResultMsg<Boolean> sendAttachmentMail(@RequestBody MailDTO mail) {
+    @PostMapping("/complexMail/send")
+    public ResultMsg<Boolean> sendComplexMail(@RequestBody MailDTO mail) {
         return ResultMsg.ok(buildMimeMessageAndSendMail(mail));
     }
 

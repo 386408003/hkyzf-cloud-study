@@ -55,7 +55,7 @@
         <!-- 项目内部依赖 -->
         <dependency>
             <groupId>top.hkyzf</groupId>
-            <artifactId>hkyzf-provider-message</artifactId>
+            <artifactId>hkyzf-provider-member</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
