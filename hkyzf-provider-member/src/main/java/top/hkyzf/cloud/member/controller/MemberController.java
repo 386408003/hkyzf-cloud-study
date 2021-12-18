@@ -1,7 +1,8 @@
-package top.hkyzf.cloud.controller;
+package top.hkyzf.cloud.member.controller;
 
 import cn.hutool.core.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.mail.MailException;
@@ -10,7 +11,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.*;
 import top.hkyzf.cloud.common.dto.MailDTO;
+import top.hkyzf.cloud.common.dto.PhoneDTO;
 import top.hkyzf.cloud.common.utils.ResultMsg;
+import top.hkyzf.cloud.member.entity.Phone;
+import top.hkyzf.cloud.member.entity.PhoneMapper;
+import top.hkyzf.cloud.member.service.IPhoneService;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -19,6 +24,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * 会员服务生产者
@@ -33,6 +39,8 @@ import java.io.UnsupportedEncodingException;
 public class MemberController {
     @Resource
     private JavaMailSender mailSender;
+    @Autowired
+    private IPhoneService phoneService;
     @Value("${spring.mail.username}")
     private String username;
 
@@ -151,9 +159,33 @@ public class MemberController {
         return ResultMsg.ok(buildMimeMessageAndSendMail(mail));
     }
 
+    /**
+     * 查询所有的手机设备列表
+     * @return 手机设备列表
+     */
+    @GetMapping("/phone")
+    public ResultMsg<List<PhoneDTO>> getPhone() {
+        List<Phone> phoneList = phoneService.list();
+        List<PhoneDTO> phoneDTOList = PhoneMapper.INSTANCE.phoneToPhoneDTOList(phoneList);
+        return ResultMsg.ok(phoneDTOList);
+    }
+
+    /**
+     * 保存使用脚本的手机设备信息
+     * @param phoneDTO 手机设备信息
+     * @return 保存结果
+     */
+    @PostMapping("/phone")
+    public ResultMsg<Boolean> savePhone(@RequestBody PhoneDTO phoneDTO) {
+        Phone phone = PhoneMapper.INSTANCE.phoneDtoToPhone(phoneDTO);
+        boolean save = phoneService.save(phone);
+        return ResultMsg.ok(save);
+    }
+
     @GetMapping("/hello/{msg}")
     public ResultMsg<String> hello(@PathVariable String msg) {
         String str = "你好：" + msg;
         return ResultMsg.ok(str);
     }
+
 }

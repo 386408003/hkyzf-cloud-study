@@ -4,13 +4,19 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 /**
+ * 邮件传输对象
+ *
  * @author 朱峰
  * @date 2021-12-9 0:07
  */
 @Data
-public class MailDTO {
+public class MailDTO implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * 收件邮箱
      */

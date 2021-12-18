@@ -15,7 +15,7 @@ spring:
   # 在日常开发中如果遇到多套环境下的不同配置，可以通过 Spring 提供的 ${spring.profiles.active} 这个配置项来配置。
   # 通常的做法是通过 -Dspring.profiles.active=<profile> 参数指定其配置来达到环境间灵活的切换。
   profiles:
-    active: prod
+    active: dev
   application:
     # 应用名称
     name: consumer-member
@@ -53,7 +53,7 @@ spring:
         # spring.cloud.nacos.config.ext-config[n].data-id 的值必须带文件扩展名，文件扩展名既可支持 properties，又可以支持 yaml/yml。
         # 此时 spring.cloud.nacos.config.file-extension 的配置对自定义扩展配置的 Data Id 文件扩展名没有影响。
         # extension-configs:
-        #   - data-id: mail-service.yaml
+        #   - data-id: common-mail.yaml
         #     refresh: true
           # 1、Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
           # - data-id: ext-config-common01.properties
@@ -73,11 +73,13 @@ spring:
         # 通过 spring.cloud.nacos.config.shared-configs[n] 来配置时，Data Id 必须带文件扩展名，文件扩展名既可支持 properties，也可以支持 yaml/yml。
         # 此时 spring.cloud.nacos.config.file-extension 的配置对自定义扩展配置的 Data Id 文件扩展名没有影响。
         shared-configs:
-          - data-id: mail-service.yaml
-            group: COMMON_GROUP
+          # 引入日志文件
           - data-id: commons-cloud.yaml
             group: COMMON_GROUP
             refresh: true
+          # 发送邮件相关配置
+          - data-id: common-mail.yaml
+            group: COMMON_GROUP
           # 1、Data Id 在默认的组 DEFAULT_GROUP,不支持配置的动态刷新
           # - data-id: all-common.properties
           # 2、Data Id 在默认的组 DEFAULT_GROUP，支持动态刷新
